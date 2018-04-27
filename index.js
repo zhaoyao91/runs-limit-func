@@ -1,34 +1,20 @@
-function runsLimitFunc ({maxRuns = 100} = {}) {
-  let runCount = 0
-  const queue = []
+const buildSignal = require('runs-limit-signal')
 
-  function flush () {
-    const countToRun = maxRuns - runCount
-    if (countToRun > 0) {
-      const resolves = queue.splice(0, countToRun)
-      runCount += resolves.length
-      resolves.forEach(resolve => resolve())
-    }
-  }
-
+function runsLimitFunc (options) {
+  const signal = buildSignal(options)
   return function wrapFunc (func) {
-    return function wrappedFunc (...args) {
-      return new Promise(resolve => {
-        queue.push(resolve)
-        flush()
-      }).then(async () => {
-        let result
-        let error
-        try {
-          result = await func(...args)
-        } catch (err) {
-          error = err
-        }
-        runCount--
-        flush()
-        if (error) throw error
-        else return result
-      })
+    return async function wrappedFunc (...args) {
+      const done = await signal()
+      let result
+      let error
+      try {
+        result = await func(...args)
+      } catch (err) {
+        error = err
+      }
+      done()
+      if (error) throw error
+      else return result
     }
   }
 }

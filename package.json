@@ -1,0 +1,25 @@
+{
+  "name": "runs-limit-func",
+  "version": "1.0.0",
+  "description": "wrap a function to support concurrency limit",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhaoyao91/runs-limit-func.git"
+  },
+  "keywords": [
+    "concurrency",
+    "concurrent",
+    "runs-limit",
+    "func"
+  ],
+  "author": "zhaoyao91 <zhaoyao91@163.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.4.3",
+    "sleep-promise": "^6.0.0"
+  }
+}

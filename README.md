@@ -5,7 +5,7 @@ wrap a function to support concurrency limit
 ## Installation
 
 ```
-npm install runs-limti-func
+npm install runs-limit-func
 ```
 
 ## Usage
